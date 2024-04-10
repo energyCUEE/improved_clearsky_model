@@ -9,9 +9,10 @@ $$
 
 The Linke turbidity coefficient $T_L$ in the model values vary depending on the location. Therefore, this repository introduce [experiment](adjusted_TL_experiment.ipynb) to adjust the $T_L$ to be suitable for each specific location.
 
+
 ## How to use ClearskyCalculator class
 
- python
+'''python
 import pandas as pd
 import numpy as np
 from solar_utils.clear_sky_calculator import ClearskyCalculator
@@ -29,6 +30,7 @@ end_date = '2023-01-02'
 freq = '15min'
 choice = 'estimate'
 solar_info_df = site_obj.get_solar_info(start_date=start_date, end_date=end_date, freq=freq, choice=choice)
+```
 ## Adjusting $T_L$ experiment
 
 We have filtered clear-sky days based on the rate of change (ROC), where the concept involves clear-sky day data increasing until midday and then decreasing until the end of the day, ensuring that each day has exactly one concave point. Moreover, a critical criterion for meeting the filtering criteria has been that all clear-sky indices from all data points must have surpassed a specific value (now set at threshold_k=0.7). Following this filtering process, TL has been updated using linear and Huber regression with an iterative method until convergence is achieved.
