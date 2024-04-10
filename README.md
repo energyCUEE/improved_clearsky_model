@@ -21,7 +21,7 @@ from solar_utils.clear_sky_calculator import ClearskyCalculator
 
 lat = 9.302
 long = 110.833
-site1_obj = ClearskyCalculator(lat, long)
+site_obj = ClearskyCalculator(lat, long)
 
 # Define the data range to calculate clear-sky information
 

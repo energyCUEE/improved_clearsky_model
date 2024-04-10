@@ -1,7 +1,6 @@
 
 
 __pycache__/
-
 example_data/full_data.csv
 example_data/prepare_sample_data.ipynb
 solar_utils/metadata/plant_meta_update_TL.csv
