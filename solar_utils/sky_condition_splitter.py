@@ -137,7 +137,7 @@ class SkyConditionSplitter():
         f2 = math.exp(-h/1250);
         a1 = (h*5.09e-5) + 0.868;
         a2 = (h*3.92e-5) + 0.0387;
-        dependent_var =  ((f1 - f2)*a2*_df['AM'] + (np.log(_df['I'] / (a1 * I0 * _df['cos_zna'])))).to_numpy().reshape(-1, 1)
+        dependent_var =  ((f1 - f2)*a2*_df['AM'] + (np.log(_df['I'] / (a1 * I0 * _df['cos_zna'])))).to_numpy().reshape(-1, 1).ravel()
         independent_var = (- a2 * f2 * _df['AM']).to_numpy().reshape(-1, 1)
         
         linear_model = LinearRegression()
@@ -149,7 +149,7 @@ class SkyConditionSplitter():
         TL_linear = linear_model.coef_[0]
         TL_huber = huber_loss_model.coef_[0]
 
-        return TL_linear[0], TL_huber
+        return TL_linear, TL_huber
 
     @staticmethod
     def update_new_clr(df_site, lat, long, new_TL):
