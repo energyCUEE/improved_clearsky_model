@@ -65,6 +65,7 @@ class SkyConditionSplitter():
         clr_date_list = []
         partly_cloudy_date_list = []
         cloudy_date_list = []
+        average_k_list = []
 
         for date in all_date_list:
             date_df = df_site[df_site.index.date == date].copy()  # Create a copy to avoid SettingWithCopyWarnings
@@ -73,8 +74,10 @@ class SkyConditionSplitter():
             date_df['is_concave_point'] = date_df['is_increasing'].diff()
             date_df['is_concave_point'] = date_df['is_concave_point'] == -1
 
+            average_k = date_df['k'].mean()
+
             clr_condition = (np.sum(date_df['is_concave_point']) == 1) and (np.sum(date_df['k'] <= threshold_k) == 0)
-            partly_cloudy_condition = (date_df['k'].mean()) >= splitting_k
+            partly_cloudy_condition = average_k >= splitting_k
 
             if clr_condition:
                 clr_date_list.append(date)
@@ -82,8 +85,10 @@ class SkyConditionSplitter():
                 partly_cloudy_date_list.append(date)
             else:
                 cloudy_date_list.append(date)
+            
+            average_k_list.append(average_k)
 
-        return clr_date_list, partly_cloudy_date_list, cloudy_date_list
+        return clr_date_list, partly_cloudy_date_list, cloudy_date_list, average_k_list
 
     
     def cluster_sky_condition(self, threshold_k =0.7, splitting_k=0.6):
@@ -93,12 +98,15 @@ class SkyConditionSplitter():
             site_name = f"site_{('00' + str(site_no))[-3:]}"
             df_site = self.measurement_df[self.measurement_df['site_name'] == site_name].copy()
 
-            clr_date_list, partly_cloudy_date_list, cloudy_date_list = self.split_day_by_roc(df_site, threshold_k=threshold_k, spliting_k=splitting_k)
+            clr_date_list, partly_cloudy_date_list, cloudy_date_list, average_k_list = self.split_day_by_roc(df_site, threshold_k=threshold_k, splitting_k=splitting_k)
 
             cluster_df_site = pd.DataFrame({'Date': clr_date_list + partly_cloudy_date_list + cloudy_date_list,
                                             'site_name': [site_name] * len(clr_date_list + partly_cloudy_date_list + cloudy_date_list),
                                             'site_date': [f"{date} {site_name}" for date in clr_date_list + partly_cloudy_date_list + cloudy_date_list],
-                                            'condition': ['clr']*len(clr_date_list) + ['partly_cloudy']*len(partly_cloudy_date_list) + ['cloudy']*len(cloudy_date_list)})
+                                            'condition': ['clr']*len(clr_date_list) + ['partly_cloudy']*len(partly_cloudy_date_list) + ['cloudy']*len(cloudy_date_list),
+                                            'average_k' : average_k_list
+                                            }
+                                            )
             cluster_info_df = pd.concat([cluster_info_df, cluster_df_site], ignore_index=True)
             print(f"Finished clustering sky-condition of site {site_name}")
 
