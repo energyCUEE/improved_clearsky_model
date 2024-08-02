@@ -7,7 +7,7 @@ $$
 I_{\mathrm{clr}}(t) = a_{1}I_{0} \cos(\theta(t))e^{-a_{2}(f_{h_1}+f_{h_2}(T_{L}-1))AM(t)}
 $$
 
-The Linke turbidity coefficient $T_L$ in the model values vary depending on the location. Therefore, this repository introduce [experiment](./estimate_monthly_TL_usedversion.ipynb) to adjust the $T_L$ to be suitable for each specific location.
+The Linke turbidity coefficient $T_L$ in the model values vary depending on the location. Therefore, this repository introduce [experiment](./evaluate_monthly_TL.ipynb) to adjust the $T_L$ to be suitable for each specific location.
 
 
 ## How to use ClearskyCalculator class
