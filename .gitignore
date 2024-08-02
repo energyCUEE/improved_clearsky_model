@@ -1,6 +1,9 @@
-
-
 __pycache__/
 example_data/full_data.csv
 example_data/prepare_sample_data.ipynb
 solar_utils/metadata/plant_meta_update_TL.csv
+unused/
+TL_pics_archived/
+papers_figs/cloudindex_scatter_ts.pdf
+estimate_monthly_TL_usedversion.ipynb
+plot_data/
