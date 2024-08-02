@@ -16,7 +16,7 @@ The ClearskyCalculator class requires the latitude and longitude of a specific l
 ``` python
 import pandas as pd
 import numpy as np
-from solar_utils.clear_sky_calculator import ClearskyCalculator
+from solar_utils.clearsky_calculator import ClearskyCalculator
 
 # Initialize the instance by defining latitude and longitude to retrieve relevant parameters
 lat = 13.7563  # Latitude for Bangkok, Thailand
