@@ -30,7 +30,7 @@ monthly_TL = np.array([2.900, 3.414, 4.005, 4.271,
                        3.156, 3.223, 2.730, 2.835])
 
 # Initialize the ClearskyCalculator with provided monthly TL values
-site_obj = ClearskyCalculator(lat=lat, long=long,  defined_alt=defined_alt, monthly_TL=monthly_TL)
+site_obj = ClearskyCalculator(lat=lat, long=long, defined_alt=defined_alt, monthly_TL=monthly_TL)
 
 # Define the date range to calculate clear-sky information
 start_date = '2024-01-01'
