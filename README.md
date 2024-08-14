@@ -45,6 +45,40 @@ solar_info_df = site_obj.get_solar_info(start_date=start_date, end_date=end_date
 print(solar_info_df.head())
 
 ```
+For users who need to work with other sites where the configuration file does not include altitude and monthly Link Turbidity, you can obtain these values using the following approach: for altitude, you can use [OpenTopography](https://www.opentopodata.org/), and for monthly Link Turbidity, you can use relevant data sources like the pvlib library.
+
+```python
+import requests
+import pandas as pd
+import pvlib
+
+# Given coordinates
+lat = 13.73677405
+long = 100.5321224
+
+# Function to get elevation
+def get_elevation(lat, long):
+    url = f'https://api.opentopodata.org/v1/srtm30m?locations={lat},{long}'
+    response = requests.get(url)
+    if response.status_code == 200:
+        elevation = response.json()['results'][0]['elevation']
+        return elevation
+    else:
+        return None
+
+# Function to obtain monthly Linke turbidity
+def obtain_tl_months(lat, long):
+    times = pd.date_range(start='2020-01-01', end='2020-12-31', freq='MS')
+    linke_turbidity = pvlib.clearsky.lookup_linke_turbidity(times, lat, long)
+    return linke_turbidity.values
+
+# Get elevation
+defined_alt = get_elevation(lat, long)
+
+# Obtain monthly Linke turbidity
+monthly_TL = obtain_tl_months(lat, long)
+
+```
 
 ## Adjusting $T_L$ experiment
 
