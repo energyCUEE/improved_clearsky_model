@@ -25,7 +25,7 @@ class ClearskyCalculator:
     _alt_metadata_arr = _gridtiff_metadata_df['alt'].to_numpy()
     _solarmap_TL_metadata_arr = _gridtiff_metadata_df['old_TL'].to_numpy()
     
-    _JanJai_metadata_df = pd.read_csv(os.path.join(_matadata_dir, 'JanJaiAngstromTurbidity.csv'))
+    _JanJai_metadata_df = pd.read_csv(os.path.join(_matadata_dir, 'JanjaiAngstromTurbidity.csv'))
     _JanJai_lat_metadata_arr = (_JanJai_metadata_df['Latitude'] * np.pi / 180).to_numpy().reshape(-1, 1)
     _JanJai_long_metadata_arr = (_JanJai_metadata_df['Longitude'] * np.pi / 180).to_numpy().reshape(-1, 1)
     
